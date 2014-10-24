@@ -3,6 +3,7 @@ package dam.animacion;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,12 +19,10 @@ public class Main extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ImageView vista = (ImageView) findViewById(R.id.ivAnimacion);
         animacion = (AnimationDrawable) getResources().getDrawable(R.drawable.animacion);
-        ImageView vista = new ImageView(this);
         vista.setBackgroundColor(Color.WHITE);
-        vista.setAdjustViewBounds(true);
-        vista.setMaxWidth(50);
-        vista.setMaxHeight(50);
         vista.setImageDrawable(animacion);
         vista.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,10 +30,7 @@ public class Main extends Activity {
                 animacion.start();
             }
         });
-
-        setContentView(vista);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
