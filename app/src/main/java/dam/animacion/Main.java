@@ -3,33 +3,66 @@ package dam.animacion;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 
 public class Main extends Activity {
 
     AnimationDrawable animacion;
+    ImageView imagen;
+    Animation animacionTween;
+    int contador=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImageView vista = (ImageView) findViewById(R.id.ivAnimacion);
+        imagen = (ImageView) findViewById(R.id.ivAnimacion);
         animacion = (AnimationDrawable) getResources().getDrawable(R.drawable.animacion);
-        vista.setBackgroundColor(Color.WHITE);
-        vista.setImageDrawable(animacion);
-        vista.setOnClickListener(new View.OnClickListener() {
+        imagen.setBackgroundColor(Color.WHITE);
+        imagen.setImageDrawable(animacion);
+
+
+        animacionTween = AnimationUtils.loadAnimation(this, R.anim.animaciontween);
+        animacionTween.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onClick(View view) {
-                animacion.start();
+            public void onAnimationStart(Animation animation) {
+                if(contador<3){
+                    animacion.start();
+                    imagen.setAnimation(animacionTween);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                contador++;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
             }
         });
+
+
+
+//        imagen.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                {
+//        });
+
+
     }
 
     @Override
