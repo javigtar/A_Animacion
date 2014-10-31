@@ -14,13 +14,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-
+//JAVIER GARCIA TARIN
 public class Main extends Activity {
 
     AnimationDrawable animacion;
     ImageView imagen;
     Animation animacionTween;
-    int contador=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,21 +29,24 @@ public class Main extends Activity {
         animacion = (AnimationDrawable) getResources().getDrawable(R.drawable.animacion);
         imagen.setBackgroundColor(Color.WHITE);
         imagen.setImageDrawable(animacion);
-
-
         animacionTween = AnimationUtils.loadAnimation(this, R.anim.animaciontween);
+
         animacionTween.setAnimationListener(new Animation.AnimationListener() {
+
+            int contador = 0; //Contador de las veces que se repite
             @Override
             public void onAnimationStart(Animation animation) {
-                if(contador<3){
-                    animacion.start();
-                    imagen.setAnimation(animacionTween);
+                if (contador < 3){ //Condicion para que solo se repita 3 veces
+                    imagen.startAnimation(animacionTween);
+                }else {
+                    animacion.stop();
                 }
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                contador++;
+                contador++; //Cuando acaba la animación suma 1 al contador de veces repetidas
+                onAnimationStart(animation); //Vuelve a iniciar la animación
             }
 
             @Override
@@ -53,16 +55,13 @@ public class Main extends Activity {
             }
         });
 
-
-
-//        imagen.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                {
-//        });
-
-
+        imagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                animacion.start();
+                imagen.startAnimation(animacionTween);
+            }
+        });
     }
 
     @Override
